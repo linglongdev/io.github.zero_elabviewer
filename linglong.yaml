@@ -1,0 +1,35 @@
+version: "1"
+
+package:
+  id: io.github.zero_elabviewer
+  name: zero_elabviewer
+  version: 0.0.0.7
+  kind: app
+  description: |
+    a PC program for displaying and controlling external data acquisition system through standard communication interface such as USB CDC class.
+
+command:
+  - /opt/apps/io.github.zero_elabviewer/files/bin/zero_elabviewer
+
+base: org.deepin.foundation/23.0.0
+runtime: org.deepin.Runtime/23.0.1
+
+sources:
+  - kind: git
+    url: https://github.com/adamberlinger/zero_elabviewer.git
+    version: master
+    commit: caee98bc3877af4c1186ae6e608bf41d6b75eafd
+  - kind: file
+    url: http://ftp.cn.debian.org/debian/pool/main/f/fftw3/libfftw3-dev_3.3.8-2_amd64.deb
+    digest: 4f38dfd0e6ef4e4098ccd4c0f569c08b68a2c8a8263e53eb9c87713d6f47d731
+  - kind: file
+    url: http://ftp.cn.debian.org/debian/pool/main/f/fftw3/libfftw3-bin_3.3.8-2_amd64.deb
+    digest: b549b1ad61157c3df102b57338a1f7b35e3aa0ce3e765d4076cacbaee6924551
+build: |
+  bash ./install_dep linglong/sources $PREFIX
+  cd /project/linglong/sources/zero_elabviewer.git
+  git apply ../../../0001-install.patch
+  qmake -makefile PREFIX=${PREFIX} LIB_INSTALL_DIR=${PREFIX}/lib/${TRIPLET}
+  make -j$(nproc)
+  make install
+ 
