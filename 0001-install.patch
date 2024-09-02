@@ -1,0 +1,64 @@
+From 11f86958fb1512b15b705de1d4b9d69ff111ea58 Mon Sep 17 00:00:00 2001
+From: wjyrich <1071633242@qq.com>
+Date: Mon, 19 Aug 2024 14:02:29 +0800
+Subject: [PATCH] install
+
+---
+ resources/img/zero_elabviewer.desktop | 11 +++++++++++
+ zero_elabviewer.pro                   | 12 +++++++++---
+ 2 files changed, 20 insertions(+), 3 deletions(-)
+ create mode 100644 resources/img/zero_elabviewer.desktop
+
+diff --git a/resources/img/zero_elabviewer.desktop b/resources/img/zero_elabviewer.desktop
+new file mode 100644
+index 0000000..c88b8d0
+--- /dev/null
++++ b/resources/img/zero_elabviewer.desktop
+@@ -0,0 +1,11 @@
++[Desktop Entry]
++Categories=Accessibility;Qt;Utility;
++Exec=zero_elabviewer
++Name=zero_elabviewer
++Name[zh_CN]=zero_elabviewer
++Icon=ctu_logo_small_en
++StartupNotify=false
++Terminal=false
++Type=Application
++GenericName=zero_elabviewer
++Version=0.7
+\ No newline at end of file
+diff --git a/zero_elabviewer.pro b/zero_elabviewer.pro
+index 511f378..89c3a75 100644
+--- a/zero_elabviewer.pro
++++ b/zero_elabviewer.pro
+@@ -6,7 +6,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
+ TEMPLATE = app
+ TARGET = zero_elabviewer
+ DEPENDPATH += src
+-INCLUDEPATH += src src/DataUtils src/FunctionWidgets src/HelperWidgets
++INCLUDEPATH += src src/DataUtils src/FunctionWidgets src/HelperWidgets $$PREFIX/include
+ LIBS += -lfftw3
+ RESOURCES = resources/resources.qrc
+ 
+@@ -26,9 +26,15 @@ MOC_DIR = build
+ RCC_DIR = build
+ 
+ binfile.files+=build/zero_elabviewer
+-binfile.path=/usr/bin
++binfile.path=$$PREFIX/bin
+ 
+ datafiles.files=data/*
+-datafiles.path=/usr/share/zero_elabviewer
++datafiles.path=$$PREFIX/share/zero_elabviewer
+ 
+ INSTALLS += binfile datafiles
++desktop.files = resources/img/zero_elabviewer.desktop
++desktop.path = $$PREFIX/share/applications/
++icons.path = $$PREFIX/share/icons
++icons.files = resources/img/ctu_logo_small_en.png
++
++INSTALLS += desktop icons
+\ No newline at end of file
+-- 
+2.43.4
+
